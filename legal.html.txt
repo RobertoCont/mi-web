@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STRONG2 · Aviso de salud</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>Aviso de salud</h1>
+      <p>La información de STRONG2 es educativa y no reemplaza evaluación profesional. Ante dolor, lesión o condición médica, se recomienda consultar a un profesional de salud antes de entrenar.</p>
+      <a href="index.html">Volver</a>
+    </section>
+  </main>
+</body>
+</html>

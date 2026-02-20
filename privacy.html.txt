@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STRONG2 · Privacidad</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="card">
+      <h1>Privacidad</h1>
+      <p>En este borrador, el progreso y publicaciones se guardan únicamente en el navegador del dispositivo (LocalStorage). No se recopilan datos en servidores.</p>
+      <a href="index.html">Volver</a>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STRONG2 · Gimnasios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="index.html"><strong>STRONG2</strong><span>gimnasios</span></a>
+        <nav class="nav">
+          <a href="index.html">Inicio</a>
+          <a href="rutinas.html">Rutina</a>
+          <a href="gimnasios.html">Gimnasios</a>
+          <a href="comunidad.html">Comunidad</a>
+          <a href="ejercicios.html">Ejercicios</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Gimnasios en Iquique</h1>
+      <p class="muted">Sección preparada para listar gimnasios y planes (se completa más adelante).</p>
+    </section>
+
+    <section class="grid2" style="margin-top:14px;">
+      <article class="card">
+        <h3>Gimnasio A (placeholder)</h3>
+        <p class="muted">Dirección: —</p>
+        <p>Planes: próximamente.</p>
+        <a href="https://www.google.com/maps/search/Iquique+gimnasio" target="_blank" rel="noopener">Ver en mapa</a>
+      </article>
+
+      <article class="card">
+        <h3>Gimnasio B (placeholder)</h3>
+        <p class="muted">Dirección: —</p>
+        <p>Planes: próximamente.</p>
+        <a href="https://www.google.com/maps/search/Iquique+gimnasio" target="_blank" rel="noopener">Ver en mapa</a>
+      </article>
+    </section>
+
+    <footer class="container">
+      <small class="muted"><a href="legal.html">Aviso de salud</a> · <a href="privacy.html">Privacidad</a></small>
+    </footer>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STRONG2 · Ejercicios</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="index.html"><strong>STRONG2</strong><span>ejercicios</span></a>
+        <nav class="nav">
+          <a href="index.html">Inicio</a>
+          <a href="rutinas.html">Rutina</a>
+          <a href="gimnasios.html">Gimnasios</a>
+          <a href="comunidad.html">Comunidad</a>
+          <a href="ejercicios.html">Ejercicios</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Biblioteca de ejercicios</h1>
+      <p class="muted">Búsqueda por nombre y filtro por grupo muscular. (Por ahora: texto + imagen)</p>
+
+      <div class="grid2" style="margin-top:14px;">
+        <label>
+          Buscar
+          <input id="e-buscar" placeholder="Ej: press, sentadilla..." />
+        </label>
+
+        <label>
+          Grupo muscular
+          <select id="e-grupo">
+            <option value="todos">Todos</option>
+            <option value="pecho">Pecho</option>
+            <option value="espalda">Espalda</option>
+            <option value="pierna">Pierna</option>
+            <option value="hombro">Hombro</option>
+            <option value="brazo">Brazo</option>
+            <option value="core">Core</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section id="ejercicios-list" style="margin-top:14px;"></section>
+
+    <footer class="container">
+      <small class="muted"><a href="legal.html">Aviso de salud</a> · <a href="privacy.html">Privacidad</a></small>
+    </footer>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

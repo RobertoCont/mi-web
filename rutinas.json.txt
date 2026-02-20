@@ -1,0 +1,44 @@
+[
+  {
+    "id": "r3_fullbody_principiante",
+    "nombre": "Full Body 3 días (Principiante)",
+    "descripcion": "Rutina base para adaptación, técnica y consistencia.",
+    "dias": 3,
+    "nivel": "principiante",
+    "objetivo": "general",
+    "ejercicios": [
+      { "nombre": "Sentadilla Goblet", "series": 3, "reps": 10, "descanso_seg": 90, "carga_kg": 0 },
+      { "nombre": "Press banca mancuernas", "series": 3, "reps": 10, "descanso_seg": 90, "carga_kg": 0 },
+      { "nombre": "Remo con mancuerna", "series": 3, "reps": 10, "descanso_seg": 90, "carga_kg": 0 },
+      { "nombre": "Peso muerto rumano", "series": 3, "reps": 10, "descanso_seg": 90, "carga_kg": 0 }
+    ]
+  },
+  {
+    "id": "r4_torso_pierna_intermedio",
+    "nombre": "Torso/Pierna 4 días (Intermedio)",
+    "descripcion": "Balance de volumen y frecuencia con progresión simple.",
+    "dias": 4,
+    "nivel": "intermedio",
+    "objetivo": "general",
+    "ejercicios": [
+      { "nombre": "Press banca", "series": 4, "reps": 8, "descanso_seg": 120, "carga_kg": 0 },
+      { "nombre": "Dominadas asistidas", "series": 4, "reps": 6, "descanso_seg": 120, "carga_kg": 0 },
+      { "nombre": "Prensa", "series": 4, "reps": 10, "descanso_seg": 120, "carga_kg": 0 },
+      { "nombre": "Curl femoral", "series": 3, "reps": 12, "descanso_seg": 90, "carga_kg": 0 }
+    ]
+  },
+  {
+    "id": "r5_ppl_avanzado",
+    "nombre": "PPL 5 días (Avanzado)",
+    "descripcion": "Más volumen semanal, pensado para quien ya domina técnica y recuperación.",
+    "dias": 5,
+    "nivel": "avanzado",
+    "objetivo": "general",
+    "ejercicios": [
+      { "nombre": "Press militar", "series": 4, "reps": 6, "descanso_seg": 150, "carga_kg": 0 },
+      { "nombre": "Fondos", "series": 4, "reps": 8, "descanso_seg": 150, "carga_kg": 0 },
+      { "nombre": "Remo con barra", "series": 4, "reps": 8, "descanso_seg": 150, "carga_kg": 0 },
+      { "nombre": "Sentadilla", "series": 5, "reps": 5, "descanso_seg": 180, "carga_kg": 0 }
+    ]
+  }
+]

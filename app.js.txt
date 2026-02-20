@@ -1,0 +1,276 @@
+// ===== Utilidades =====
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+function setActiveNav(){
+  const path = location.pathname.split("/").pop() || "index.html";
+  $$(".nav a").forEach(a => {
+    const href = a.getAttribute("href");
+    if(href === path) a.classList.add("active");
+  });
+}
+
+function lsGet(key, fallback){
+  try{
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  }catch{ return fallback; }
+}
+
+function lsSet(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+// ===== Cargar JSON =====
+async function loadJSON(path){
+  const res = await fetch(path);
+  if(!res.ok) throw new Error("No se pudo cargar: " + path);
+  return await res.json();
+}
+
+// ===== Rutinas =====
+async function initRutinas(){
+  const wrap = $("#rutinas-list");
+  if(!wrap) return;
+
+  const data = await loadJSON("data/rutinas.json");
+
+  const levelSel = $("#f-nivel");
+  const goalSel  = $("#f-objetivo");
+  const daysSel  = $("#f-dias");
+  const qInput   = $("#f-buscar");
+
+  function render(){
+    const nivel = levelSel.value;
+    const objetivo = goalSel.value;
+    const dias = daysSel.value;
+    const q = qInput.value.trim().toLowerCase();
+
+    const filtered = data.filter(r => {
+      const okNivel = (nivel === "todos") || (r.nivel === nivel);
+      const okObj   = (objetivo === "todos") || (r.objetivo === objetivo);
+      const okDias  = (dias === "todos") || (String(r.dias) === dias);
+      const okQ     = !q || r.nombre.toLowerCase().includes(q);
+      return okNivel && okObj && okDias && okQ;
+    });
+
+    wrap.innerHTML = filtered.map(r => `
+      <article class="card">
+        <h3>${r.nombre}</h3>
+        <p class="muted">${r.descripcion}</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+          <span class="badge">${r.dias} días</span>
+          <span class="badge">${r.nivel}</span>
+          <span class="badge">${r.objetivo}</span>
+        </div>
+        <button data-rid="${r.id}" class="select-rutina">Seleccionar rutina</button>
+      </article>
+    `).join("");
+
+    $$(".select-rutina").forEach(btn => {
+      btn.addEventListener("click", () => openRutinaConfigurator(btn.dataset.rid, data));
+    });
+  }
+
+  function openRutinaConfigurator(rid, data){
+    const r = data.find(x => x.id === rid);
+    if(!r) return;
+
+    const modal = $("#rutina-modal");
+    const body  = $("#rutina-modal-body");
+    const title = $("#rutina-modal-title");
+
+    title.textContent = r.nombre;
+
+    // Crea tabla editable
+    const rows = r.ejercicios.map((e, i) => `
+      <tr>
+        <td>${e.nombre}</td>
+        <td><input type="number" min="1" value="${e.series}" data-i="${i}" data-k="series"></td>
+        <td><input type="number" min="1" value="${e.reps}" data-i="${i}" data-k="reps"></td>
+        <td><input type="number" min="0" value="${e.descanso_seg}" data-i="${i}" data-k="descanso_seg"></td>
+        <td><input type="number" min="0" value="${e.carga_kg}" data-i="${i}" data-k="carga_kg"></td>
+      </tr>
+    `).join("");
+
+    body.innerHTML = `
+      <p class="muted">Configuración rápida (series, reps, descanso y carga). Se guarda localmente para seguimiento.</p>
+      <div class="card" style="overflow:auto;">
+        <table role="grid">
+          <thead>
+            <tr>
+              <th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso (s)</th><th>Carga (kg)</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button id="save-rutina">Guardar selección</button>
+        <button class="secondary" id="close-rutina">Cerrar</button>
+      </div>
+    `;
+
+    // listeners: actualizar datos en memoria
+    body.querySelectorAll("input").forEach(inp => {
+      inp.addEventListener("input", () => {
+        const i = Number(inp.dataset.i);
+        const k = inp.dataset.k;
+        r.ejercicios[i][k] = Number(inp.value);
+      });
+    });
+
+    $("#save-rutina").addEventListener("click", () => {
+      const selected = lsGet("strong2_selected_rutina", null);
+      const progress = lsGet("strong2_progress", { sesiones: [] });
+
+      lsSet("strong2_selected_rutina", r);
+      // crea una sesión “hoy” como ejemplo (se puede ajustar luego)
+      progress.sesiones.unshift({
+        fecha: new Date().toISOString().slice(0,10),
+        rutinaId: r.id,
+        rutinaNombre: r.nombre,
+        ejercicios: r.ejercicios.map(e => ({...e, completado:false}))
+      });
+      lsSet("strong2_progress", progress);
+
+      alert("Rutina guardada. Se registró una sesión en Progreso.");
+    });
+
+    $("#close-rutina").addEventListener("click", () => modal.close());
+    modal.showModal();
+  }
+
+  [levelSel, goalSel, daysSel, qInput].forEach(el => el.addEventListener("input", render));
+  render();
+}
+
+function initProgreso(){
+  const wrap = $("#progreso");
+  if(!wrap) return;
+
+  const selected = lsGet("strong2_selected_rutina", null);
+  const progress = lsGet("strong2_progress", { sesiones: [] });
+
+  if(!selected){
+    wrap.innerHTML = `<p class="muted">Aún no hay rutina seleccionada. Ir a “Rutina” para elegir una.</p>`;
+    return;
+  }
+
+  const last = progress.sesiones[0];
+  wrap.innerHTML = `
+    <div class="card">
+      <h3>Rutina activa</h3>
+      <p><strong>${selected.nombre}</strong> <span class="muted">(${selected.dias} días • ${selected.nivel} • ${selected.objetivo})</span></p>
+      <p class="muted">Última sesión registrada: ${last ? last.fecha : "—"}</p>
+      <button id="reset-progreso" class="secondary">Reiniciar progreso local</button>
+    </div>
+  `;
+
+  $("#reset-progreso").addEventListener("click", () => {
+    localStorage.removeItem("strong2_selected_rutina");
+    localStorage.removeItem("strong2_progress");
+    location.reload();
+  });
+}
+
+// ===== Ejercicios =====
+async function initEjercicios(){
+  const wrap = $("#ejercicios-list");
+  if(!wrap) return;
+
+  const data = await loadJSON("data/ejercicios.json");
+  const qInput = $("#e-buscar");
+  const gSel = $("#e-grupo");
+
+  function render(){
+    const q = qInput.value.trim().toLowerCase();
+    const g = gSel.value;
+
+    const filtered = data.filter(e => {
+      const okG = (g === "todos") || (e.grupo === g);
+      const okQ = !q || e.nombre.toLowerCase().includes(q);
+      return okG && okQ;
+    });
+
+    wrap.innerHTML = filtered.map(e => `
+      <article class="card">
+        <div class="grid2">
+          <div>
+            <h3>${e.nombre}</h3>
+            <p class="muted"><strong>Grupo:</strong> ${e.grupo}</p>
+            <p>${e.tecnica}</p>
+            <p class="muted"><strong>Errores comunes:</strong> ${e.errores}</p>
+          </div>
+          <div class="card">
+            <p class="muted">Imagen referencial (placeholder)</p>
+            <p class="muted">Ruta sugerida: <code>assets/img/${e.img}</code></p>
+          </div>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  qInput.addEventListener("input", render);
+  gSel.addEventListener("input", render);
+  render();
+}
+
+// ===== Comunidad (borrador local) =====
+function initComunidad(){
+  const list = $("#community-list");
+  const form = $("#community-form");
+  if(!list || !form) return;
+
+  const posts = lsGet("strong2_posts", []);
+
+  function render(){
+    if(posts.length === 0){
+      list.innerHTML = `<p class="muted">Aún no hay rutinas publicadas (en este dispositivo).</p>`;
+      return;
+    }
+    list.innerHTML = posts.map(p => `
+      <article class="card">
+        <h3>${p.titulo}</h3>
+        <p class="muted">${p.fecha}</p>
+        <p>${p.descripcion}</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="badge">${p.nivel}</span>
+          <span class="badge">${p.objetivo}</span>
+          <span class="badge">${p.dias} días</span>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const p = {
+      titulo: $("#c-titulo").value.trim(),
+      descripcion: $("#c-desc").value.trim(),
+      nivel: $("#c-nivel").value,
+      objetivo: $("#c-objetivo").value,
+      dias: $("#c-dias").value,
+      fecha: new Date().toISOString().slice(0,10)
+    };
+    posts.unshift(p);
+    lsSet("strong2_posts", posts);
+    form.reset();
+    render();
+  });
+
+  render();
+}
+
+// ===== Boot =====
+document.addEventListener("DOMContentLoaded", async () => {
+  setActiveNav();
+  try{
+    await initRutinas();
+    initProgreso();
+    await initEjercicios();
+    initComunidad();
+  }catch(e){
+    console.error(e);
+  }
+});

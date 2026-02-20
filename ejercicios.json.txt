@@ -1,0 +1,23 @@
+[
+  {
+    "nombre": "Sentadilla Goblet",
+    "grupo": "pierna",
+    "tecnica": "Mantener tronco firme, bajar controlado, rodillas siguen la línea del pie, subir empujando el suelo.",
+    "errores": "Colapsar rodillas hacia adentro, perder la postura, rebotar sin control.",
+    "img": "sentadilla-goblet.jpg"
+  },
+  {
+    "nombre": "Press banca",
+    "grupo": "pecho",
+    "tecnica": "Escápulas atrás y abajo, pies firmes, barra baja controlada al pecho, empuje estable.",
+    "errores": "Rebotar la barra, despegar glúteos, muñecas dobladas.",
+    "img": "press-banca.jpg"
+  },
+  {
+    "nombre": "Remo con barra",
+    "grupo": "espalda",
+    "tecnica": "Cadera atrás, espalda neutra, llevar barra hacia abdomen, controlar bajada.",
+    "errores": "Redondear espalda, tirar con impulso, acortar recorrido.",
+    "img": "remo-barra.jpg"
+  }
+]

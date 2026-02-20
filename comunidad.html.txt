@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STRONG2 · Comunidad</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="navwrap">
+        <a class="brand" href="index.html"><strong>STRONG2</strong><span>comunidad</span></a>
+        <nav class="nav">
+          <a href="index.html">Inicio</a>
+          <a href="rutinas.html">Rutina</a>
+          <a href="gimnasios.html">Gimnasios</a>
+          <a href="comunidad.html">Comunidad</a>
+          <a href="ejercicios.html">Ejercicios</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>Comunidad (borrador)</h1>
+      <p class="muted">Publicación local (en este dispositivo). Más adelante se conecta a login/BD.</p>
+
+      <form id="community-form" style="margin-top:14px;">
+        <div class="grid2">
+          <label>Título <input id="c-titulo" required placeholder="Ej: Torso/Pierna para fuerza"/></label>
+          <label>Días
+            <select id="c-dias" required>
+              <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </label>
+          <label>Nivel
+            <select id="c-nivel" required>
+              <option value="principiante">Principiante</option>
+              <option value="intermedio">Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </label>
+          <label>Objetivo
+            <select id="c-objetivo" required>
+              <option value="general">General</option>
+            </select>
+          </label>
+        </div>
+
+        <label>Descripción
+          <textarea id="c-desc" required placeholder="Explicar estructura, recomendaciones, etc."></textarea>
+        </label>
+
+        <button type="submit">Publicar</button>
+      </form>
+    </section>
+
+    <section id="community-list" style="margin-top:14px;"></section>
+
+    <footer class="container">
+      <small class="muted"><a href="legal.html">Aviso de salud</a> · <a href="privacy.html">Privacidad</a></small>
+    </footer>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
